@@ -51,7 +51,8 @@ public class OrderController {
     @GetMapping("/get-partner-by-id/{partnerId}")
     public ResponseEntity<DeliveryPartner> getPartnerById(@PathVariable String partnerId){
 
-        DeliveryPartner deliveryPartner = null;
+        DeliveryPartner deliveryPartner = new DeliveryPartner(partnerId);
+        deliveryPartner.getId();
 
         //deliveryPartner should contain the value given by partnerId
 

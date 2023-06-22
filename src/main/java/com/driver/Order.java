@@ -23,9 +23,14 @@ public class Order {
         }
         int time = HH*60 + MM;
         setDeliveryTime(time);
+        setId(id);
     }
     public void setDeliveryTime(int deliveryTime) {
         this.deliveryTime = deliveryTime;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getId() {
