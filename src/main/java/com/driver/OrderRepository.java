@@ -77,4 +77,36 @@ public class OrderRepository {
         }
         return count;
     }
+
+    public int getLastDeliveryTimeByPartnerId(String partnerId) {
+        int maxTime =0;
+        List<String> orders = partnerOrderDB.get(partnerId);
+
+        for(String orderId : orders){
+            int dTime = ordersDB.get(orderId).getDeliveryTime();
+            maxTime = Math.max(maxTime , dTime);
+        }
+        return maxTime;
+    }
+
+    public void deletePartnerById(String partnerId) {
+        deliveryPartnerDB.remove(partnerId);
+        List<String> listOfOrders = partnerOrderDB.get(partnerId);
+        partnerOrderDB.remove(partnerId);
+
+        for(String order : listOfOrders){
+            orderPartnerDB.remove(order);
+        }
+    }
+
+    public void deleteOrderById(String orderId) {
+        ordersDB.remove(orderId);
+
+        String partner = orderPartnerDB.get(orderId);
+        orderPartnerDB.remove(orderId);
+
+        partnerOrderDB.get(partner).remove(orderId);
+
+        deliveryPartnerDB.get(partner).setNumberOfOrders(partnerOrderDB.get(partner).size());
+    }
 }

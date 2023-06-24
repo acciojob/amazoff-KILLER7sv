@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.SimpleTimeZone;
 
 @Service
 public class OrderService {
@@ -47,7 +48,7 @@ public class OrderService {
     }
 
     public void deletePartnerById(String partnerId) {
-
+        orderRepository.deletePartnerById(partnerId);
     }
 
     public Integer getOrdersLeftAfterGivenTimeByPartnerId(String time, String partnerId) {
@@ -55,5 +56,25 @@ public class OrderService {
         int newTime = Integer.parseInt(deliverytime[0]) * 60 + Integer.parseInt(deliverytime[1]);
 
         return orderRepository.getOrdersLeftAfterGivenTimeByPartnerId(newTime , partnerId);
+    }
+
+    public String getLastDeliveryTimeByPartnerId(String partnerId) {
+        int time = orderRepository.getLastDeliveryTimeByPartnerId(partnerId);
+
+        String HH = String.valueOf(time/60);
+        String MM = String.valueOf(time % 60);
+
+        if(HH.length() < 2){
+            HH = '0' + HH;
+        }
+        if(MM.length() < 2){
+            MM = '0' + MM;
+        }
+
+        return HH+':'+MM;
+    }
+
+    public void deleteOrderById(String orderId) {
+        orderRepository.deleteOrderById(orderId);
     }
 }
