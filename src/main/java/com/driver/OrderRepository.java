@@ -36,4 +36,45 @@ public class OrderRepository {
         DeliveryPartner deliveryPartner = deliveryPartnerDB.get(partnerId);
         deliveryPartner.setNumberOfOrders(currOrders.size());
     }
+
+    public Order getOrderById(String orderId) {
+        return ordersDB.get(orderId);
+    }
+
+    public DeliveryPartner getPartnerByID(String partnerId) {
+        return deliveryPartnerDB.get(partnerId);
+    }
+
+    public Integer getOrderCountByPartnerId(String partnerId) {
+        return partnerOrderDB.get(partnerId).size();
+    }
+
+    public List<String> getOrdersbyPartnerId(String partnerId) {
+        return partnerOrderDB.get(partnerId);
+    }
+
+    public List<String> getAllOrders() {
+        List<String> orders = new ArrayList<>();
+        for(String order : ordersDB.keySet()){
+            orders.add(order);
+        }
+        return orders;
+    }
+
+    public Integer getCountOfUnassignedOrders() {
+        return ordersDB.size() - orderPartnerDB.size();
+    }
+
+    public Integer getOrdersLeftAfterGivenTimeByPartnerId(int newTime, String partnerId) {
+        int count =0;
+        List<String> orders = partnerOrderDB.get(partnerId);
+
+        for(String orderId : orders){
+            int dTime = ordersDB.get(orderId).getDeliveryTime();
+            if(dTime > newTime){
+                count++;
+            }
+        }
+        return count;
+    }
 }

@@ -3,6 +3,8 @@ package com.driver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class OrderService {
     @Autowired
@@ -18,5 +20,40 @@ public class OrderService {
 
     public void addOrderPartnerPair(String orderId, String partnerId) {
         orderRepository.addOrderPartnerPair(orderId , partnerId);
+    }
+
+    public Order getOrderById(String orderId) {
+        return orderRepository.getOrderById(orderId);
+    }
+
+    public DeliveryPartner getPartnerById(String partnerId) {
+        return orderRepository.getPartnerByID(partnerId);
+    }
+
+    public Integer getOrderCountByPartnerId(String partnerId) {
+        return orderRepository.getOrderCountByPartnerId(partnerId);
+    }
+
+    public List<String> getOrdersbyPartnerId(String partnerId) {
+        return orderRepository.getOrdersbyPartnerId(partnerId);
+    }
+
+    public List<String> getAllOrders() {
+        return orderRepository.getAllOrders();
+    }
+
+    public Integer getCountOfUnassignedOrders() {
+        return orderRepository.getCountOfUnassignedOrders();
+    }
+
+    public void deletePartnerById(String partnerId) {
+
+    }
+
+    public Integer getOrdersLeftAfterGivenTimeByPartnerId(String time, String partnerId) {
+        String deliverytime[] = time.split(":");
+        int newTime = Integer.parseInt(deliverytime[0]) * 60 + Integer.parseInt(deliverytime[1]);
+
+        return orderRepository.getOrdersLeftAfterGivenTimeByPartnerId(newTime , partnerId);
     }
 }
