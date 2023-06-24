@@ -29,5 +29,11 @@ public class OrderRepository {
         if(partnerOrderDB.containsKey(partnerId)){
             currOrders = partnerOrderDB.get(partnerId);
         }
+
+        currOrders.add(orderId);
+        partnerOrderDB.put(partnerId , currOrders);
+
+        DeliveryPartner deliveryPartner = deliveryPartnerDB.get(partnerId);
+        deliveryPartner.setNumberOfOrders(currOrders.size());
     }
 }
